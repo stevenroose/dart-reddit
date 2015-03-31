@@ -1,11 +1,11 @@
 name: reddit
 description: A Reddit library for Dart.
-version: 0.0.1
+version: 0.1.0
 author: Steven Roose <stevenroose@gmail.com>
 homepage: https://github.com/stevenroose/dart-reddit
 dependencies:
-  http: any
-  json_object: any
-  logging: any
+  http: ">=0.11.1+3 <0.12.0"
+  json_object: ">=1.0.18+2 <2.0.0"
+  logging: ">=0.9.3 <0.10.0"
 dev_dependencies:
   unittest: any
