@@ -2,11 +2,11 @@
 
 A Reddit library for Dart, inspired by reddit.js.
 
-## <a name="docs"></a> Documentation
+## Documentation
 
 See the Dart documentation: TODO
 
-## <a name="usage"></a> Usage
+## Usage
 
 Add the following to your `pubspec.yaml`:
 
@@ -31,7 +31,7 @@ Reddit reddit = new Reddit(new BrowserClient());
 
 Most methods in the API construct a `Query`, which can be fetched to get a future with the results.
 
-Most queries allow filtering. For the supported filters, we refer to the [Reddit API docs](https://www.reddit.com/dev/api/oauth#scope_read) or the [API docs for this library](#docs).
+Most queries allow filtering. For the supported filters, we refer to the [Reddit API docs](https://www.reddit.com/dev/api/oauth#scope_read) or the [API docs for this library](#documentation).
 
 ```dart
 // without filters
