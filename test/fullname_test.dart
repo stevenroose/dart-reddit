@@ -19,5 +19,15 @@ void main() {
     test("prefix-omitted", () {
       expect(() => new Fullname("2sut9"), throws);
     });
+
+    test("id", () {
+      Fullname fn = new Fullname("t5_2sut9");
+      expect(fn.id, equals("2sut9"));
+    });
+
+    test("type", () {
+      Fullname fn = new Fullname("t5_2sut9");
+      expect(fn.type, equals(FullnameType.SUBREDDIT));
+    });
   });
 }
