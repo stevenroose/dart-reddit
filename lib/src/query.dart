@@ -46,7 +46,7 @@ class FilterableQuery extends Query {
   FilterableQuery._(Reddit reddit, String resource, Map params, [Iterable<String> this._filters = const []])
       : super._(reddit, resource, params);
 
-  FilterableQuery filter(String filter, [String param]) {
+  FilterableQuery filter(String filter, [dynamic param]) {
     if (_filters.contains(filter) == false) {
       throw new StateError("Filter $filter is not allowed for this query. Allowed filters are $_filters");
     }
