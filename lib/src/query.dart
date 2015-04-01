@@ -1,39 +1,27 @@
-library reddit.query;
+part of reddit;
 
-import "dart:async";
-import "dart:convert";
-
-import "package:http/http.dart";
-import "package:json_object/json_object.dart";
-
-import "reddit.dart";
 
 class Query {
 
-  Client _client;
+  Reddit _reddit;
 
   String resourse;
   Map params;
 
-  Query(Client this._client, String this.resourse, Map this.params);
+  Query._(Reddit this._reddit, String this.resourse, Map this.params);
 
   Future<JsonObject> fetch() {
-    String url = _redditUrl(resourse, params);
-    Reddit.logger.fine("Fetching url: $url");
-    return _client.get(url).then((Response response) {
+    Uri uri = _redditUri(resourse, params);
+    Reddit.logger.fine("Fetching url: $uri");
+    return _reddit._client.get(uri).then((Response response) {
       return new JsonObject.fromJsonString(response.body);
     });
   }
 
-  static String _redditUrl(String resourse, Map params) {
-    String url = "http://www.reddit.com/";
-    if (params.containsKey("subreddit")) {
-      url += "r/${params["subreddit"]}/";
-    }
-    url += resourse + ".json";
+  Uri _redditUri(String resourse, Map params) {
+    String path = "$resourse.json";
     var qs = [];
     for (String key in params.keys) {
-      if (key == "subreddit") continue;
       String part = Uri.encodeQueryComponent(key);
       var val = params[key];
       if (val != null) {
@@ -41,8 +29,10 @@ class Query {
       }
       qs.add(part);
     }
-    url += "?" + qs.join("&");
-    return url;
+    return _reddit._baseApiUri().replace(
+      path: path,
+      query: qs.join("&")
+    );
   }
 }
 
@@ -52,8 +42,8 @@ class FilterableQuery extends Query {
   /// The allowed filters
   Iterable<String> _filters;
 
-  FilterableQuery(Client client, String resource, Map params, [Iterable<String> this._filters = const []])
-      : super(client, resource, params);
+  FilterableQuery._(Reddit reddit, String resource, Map params, [Iterable<String> this._filters = const []])
+      : super._(reddit, resource, params);
 
   FilterableQuery filter(String filter, [String param]) {
     if (_filters.contains(filter) == false) {

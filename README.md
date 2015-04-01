@@ -27,6 +27,23 @@ Reddit reddit = new Reddit(new Client());
 Reddit reddit = new Reddit(new BrowserClient());
 ```
 
+### Enable App-only OAuth
+
+If you don't need to access private user information, you can enable App-only OAuth. You will need an app identifier
+and a secret. You can get those [here](https://www.reddit.com/prefs/apps).
+
+Oauth is required for some of the public endpoints (those marked OAuth-only) and will be required for all endpoints
+starting August 3, 2015
+(see [this announcement](https://www.reddit.com/r/redditdev/comments/2ujhkr/important_api_licensing_terms_clarified/)).
+
+```dart
+reddit.setupUserlessOAuth(idenfitier, secret).then((reddit) {
+  // ...
+});
+// or shorter using await:
+await reddit.setupUserlessOAuth(identifier, secret);
+```
+
 ### Queries, filters and listings
 
 Most methods in the API construct a `Query`, which can be fetched to get a future with the results.

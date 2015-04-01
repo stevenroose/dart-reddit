@@ -1,14 +1,4 @@
-library reddit.listing;
-
-import "dart:async";
-@MirrorsUsed(symbols: "", override: "*", targets: "Stream")
-import "dart:mirrors";
-
-import "package:http/http.dart";
-import "package:json_object/json_object.dart";
-
-import "fullname.dart";
-import "query.dart";
+part of reddit;
 
 
 /**
@@ -20,8 +10,8 @@ class Listing extends FilterableQuery implements Stream<ListingResult> {
 
   StreamController _controller;
 
-  Listing(Client client, String resource, Map params, [Iterable<String> extraFilters = const []])
-      : super(client, resource, params, []..addAll(_LISTING_FILTERS)..addAll(extraFilters)) {
+  Listing._(Reddit reddit, String resource, Map params, [Iterable<String> extraFilters = const []])
+      : super._(reddit, resource, params, []..addAll(_LISTING_FILTERS)..addAll(extraFilters)) {
     _controller = new StreamController(onListen: fetch);
   }
 
