@@ -1,6 +1,6 @@
 # dart-reddit
 
-A Reddit library for Dart, inspired by reddit.js.
+A Reddit library for Dart, inspired by reddit.js (API) and raw.js (Auth).
 
 ## Documentation
 
@@ -27,22 +27,39 @@ Reddit reddit = new Reddit(new Client());
 Reddit reddit = new Reddit(new BrowserClient());
 ```
 
-### Enable App-only OAuth
+### OAuth
 
-If you don't need to access private user information, you can enable App-only OAuth. You will need an app identifier
-and a secret. You can get those [here](https://www.reddit.com/prefs/apps).
+To enable OAuth, you will need an app identifier and a secret. Get them [here](https://www.reddit.com/prefs/apps).
 
-Oauth is required for some of the public endpoints (those marked OAuth-only) and will be required for all endpoints
+OAuth is required for some of the public endpoints (those marked OAuth-only) and will be required for all endpoints
 starting August 3, 2015
 (see [this announcement](https://www.reddit.com/r/redditdev/comments/2ujhkr/important_api_licensing_terms_clarified/)).
 
+There are two options: App-only and User authorization.
+
+ - App-only auth
+
 ```dart
-reddit.setupUserlessOAuth(idenfitier, secret).then((reddit) {
-  // ...
-});
-// or shorter using await:
-await reddit.setupUserlessOAuth(identifier, secret);
+reddit.authSetup(identifier, secret);
+// with user info
+await reddit.authFinish(username: "sroose", password: "you wish");
+// or without
+await reddit.authFinish();
 ```
+
+Note that not providing (developer) user info will result in getting 503 Service Unavailable responses after a while.
+
+ - User-enabled auth
+
+```dart
+reddit.authSetup(identifier, secret);
+Uri authUrl = reddit.authUrl("https://myapp.com/auth_redirect");
+// redirect user to authUrl and gather the response from the auth server
+await reddit.authFinish(response: authServerResponse);
+// or if you already extracted the auth code from the ersponse
+await reddit.authFinish(code: authCode);
+```
+
 
 ### Queries, filters and listings
 
@@ -52,9 +69,9 @@ Most queries allow filtering. For the supported filters, we refer to the [Reddit
 
 ```dart
 // without filters
-reddit.front.new().fetch().then(print);
+reddit.frontPage.new().fetch().then(print);
 // filtered
-reddit.front.hot().limit(10).fetch().then(print);
+reddit.frontPage.hot().limit(10).fetch().then(print);
 ```
 
 A lot of queries also are [listings](https://www.reddit.com/dev/api/oauth#listings).

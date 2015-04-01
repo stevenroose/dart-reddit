@@ -14,6 +14,7 @@ class Query {
     Uri uri = _redditUri(resourse, params);
     Reddit.logger.fine("Fetching url: $uri");
     return _reddit._client.get(uri).then((Response response) {
+      Reddit.logger.fine("Response code ${response.statusCode}");
       return new JsonObject.fromJsonString(response.body);
     });
   }

@@ -1,8 +1,13 @@
 # Changelog
 
+## 0.3.0 (2015-04-01)
+
+- Added full OAuth2 support (app-only and user)
+- Changed auth interface
+
 ## 0.2.0 (2015-04-01)
 
-- Added App-only OAuth support
+- Added App-only OAuth support, inspired by raw.js
 
 ## 0.1.0 (2015-03-31)
 
