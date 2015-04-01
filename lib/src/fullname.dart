@@ -3,11 +3,11 @@ library reddit.fullname;
 class Fullname {
   static final RegExp _regExp = new RegExp(r"^t[1-9]\_[0-9a-z]+$");
 
-  String fullname;
+  String _value;
 
-  Fullname(String this.fullname) {
-    if (_regExp.hasMatch(fullname) == false) {
-      throw new ArgumentError("The given string $fullname is not a valid fullname."
+  Fullname(String this._value) {
+    if (_regExp.hasMatch(_value) == false) {
+      throw new ArgumentError("The given string $_value is not a valid fullname."
           "See the reddit documentation for more info: https://www.reddit.com/dev/api/oauth#fullnames");
     }
   }
@@ -22,11 +22,11 @@ class Fullname {
   }
 
   @override
-  String toString() => fullname;
+  String toString() => _value;
 
   @override
-  bool operator ==(other) => other is Fullname && other.fullname == fullname;
+  bool operator ==(other) => other is Fullname && other._value == _value;
 
   @override
-  int get hashCode => fullname.hashCode;
+  int get hashCode => _value.hashCode;
 }

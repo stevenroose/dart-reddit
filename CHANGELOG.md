@@ -4,6 +4,7 @@
 
 - Added full OAuth2 support (app-only and user)
 - Changed auth interface
+- Expose RedditUri and Fullname classes
 
 ## 0.2.0 (2015-04-01)
 
