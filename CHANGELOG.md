@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1 (2015-04-02)
+
+- Added FullnameType enum 
+- Added Fullname.id and Fullname.type getters
+- Bugfix in FilterableQuery.filter
+
 ## 0.3.0 (2015-04-01)
 
 - Added full OAuth2 support (app-only and user)
