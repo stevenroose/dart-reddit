@@ -6,10 +6,13 @@ class RedditUri {
 
   final Uri uri;
 
-  static final RegExp _REGEXP_SUB = new RegExp(
-      r"^\/r\/([a-zA-Z0-9]+)(?:\/(?:comments\/([a-z0-9]+)\/[^\/]+)(?:\/([a-z0-9]+)?(?:\/)?)?)?$");
+  // from subreddit.py reddit code
+  static final RegExp _REGEX_SUB = new RegExp(r"[A-Za-z0-9][A-Za-z0-9_]{2,20}");
 
-  static final RegExp _REGEXP_USER = new RegExp(
+  static final RegExp _REGEXP_URL_POST = new RegExp(
+      r"^\/r\/(" + _REGEX_SUB.pattern + r")(?:\/(?:comments\/([a-z0-9]+)\/[^\/]+)(?:\/([a-z0-9]+)?(?:\/)?)?)?$");
+
+  static final RegExp _REGEXP_URL_USER = new RegExp(
       r"^\/user\/([^\/]+)(?:\/(?:(comments|submitted|gilded)(?:\/)?)?)?$");
 
   factory RedditUri(dynamic/*String|Uri*/ uri) {
@@ -30,15 +33,15 @@ class RedditUri {
 
   /* SUB */
 
-  String get subReddit => _REGEXP_SUB.firstMatch(uri.path).group(1);
+  String get subReddit => _REGEXP_URL_POST.firstMatch(uri.path).group(1);
 
-  String get postId => _REGEXP_SUB.firstMatch(uri.path).group(2);
+  String get postId => _REGEXP_URL_POST.firstMatch(uri.path).group(2);
 
-  String get commentId => _REGEXP_SUB.firstMatch(uri.path).group(3);
+  String get commentId => _REGEXP_URL_POST.firstMatch(uri.path).group(3);
 
   /* USERS */
 
-  String get userName => _REGEXP_USER.firstMatch(uri.path).group(1);
+  String get userName => _REGEXP_URL_USER.firstMatch(uri.path).group(1);
 
 
   /* STATIC */
