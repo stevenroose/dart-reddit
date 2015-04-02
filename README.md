@@ -4,7 +4,7 @@ A Reddit library for Dart, inspired by reddit.js (API) and raw.js (Auth).
 
 ## Documentation
 
-See the Dart documentation: TODO
+See the [Dart documentation](http://www.dartdocs.org/documentation/reddit/latest/).
 
 ## Usage
 
