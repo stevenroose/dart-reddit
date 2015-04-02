@@ -10,12 +10,23 @@ class Query {
 
   Query._(Reddit this._reddit, String this.resourse, Map this.params);
 
+  /**
+   * Fetch the data from the API. Returns a [JsonObject].
+   *
+   * Throws a [RedditApiException] of the API returned invalid JSON.
+   */
   Future<JsonObject> fetch() {
     Uri uri = _redditUri(resourse, params);
     Reddit.logger.fine("Fetching url: $uri");
     return _reddit._client.get(uri).then((Response response) {
-      Reddit.logger.fine("Response code ${response.statusCode}");
-      return new JsonObject.fromJsonString(response.body);
+      Reddit.logger.finer("Response code ${response.statusCode}");
+      try {
+        return new JsonObject.fromJsonString(response.body);
+      } on FormatException catch (e) {
+        var exc = new RedditApiException("Exception in parsing JSON from $uri", e);
+        Reddit.logger.warning(exc);
+        throw exc;
+      }
     });
   }
 
@@ -66,4 +77,12 @@ class FilterableQuery extends Query {
     String f = symbol.substring(8, symbol.length - 2);
     return filter(f, inv.positionalArguments.isEmpty ? null : inv.positionalArguments.first);
   }
+}
+
+class RedditApiException implements Exception {
+  String message;
+  var reason;
+  RedditApiException([this.message, this.reason]);
+  @override
+  String toString() => "RedditApiException: $message\nReason: $reason";
 }
