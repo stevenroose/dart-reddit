@@ -3,7 +3,7 @@ library reddit.fullname;
 class Fullname {
   static final RegExp _REG_EXP = new RegExp(r"^t([1-9])\_([0-9a-z]+$)");
 
-  String _value;
+  final String _value;
 
   Fullname(String this._value) {
     if (_REG_EXP.hasMatch(_value) == false) {
@@ -11,6 +11,15 @@ class Fullname {
           "See the reddit documentation for more info: https://www.reddit.com/dev/api/oauth#fullnames");
     }
   }
+
+  Fullname.fromId(FullnameType type, String id) : _value = "t${type.index}_$id";
+
+  /**
+   * Skip the validity check.
+   *
+   * It is not advised to use this constructor.
+   */
+  const Fullname.constant(this._value);
 
   factory Fullname.cast(dynamic from) {
     if (from is Fullname) {
