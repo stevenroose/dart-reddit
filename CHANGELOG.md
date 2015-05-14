@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.2 (2015-04-03)
+
+- Updated RedditUri with official regex and extra test
+- Updated README
+- Constant constructor for Fullname
+- Improved exception handling in Query
+
 ## 0.3.1 (2015-04-02)
 
 - Added FullnameType enum 
