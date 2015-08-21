@@ -15,19 +15,18 @@ class Query {
    *
    * Throws a [RedditApiException] of the API returned invalid JSON.
    */
-  Future<JsonObject> fetch() {
+  Future<JsonObject> fetch() async {
     Uri uri = _redditUri(resourse, params);
     Reddit.logger.fine("Fetching url: $uri");
-    return _reddit._client.get(uri).then((Response response) {
-      Reddit.logger.finer("Response code ${response.statusCode}");
-      try {
-        return new JsonObject.fromJsonString(response.body);
-      } on FormatException catch (e) {
-        var exc = new RedditApiException("Exception in parsing JSON from $uri", e);
-        Reddit.logger.warning(exc);
-        throw exc;
-      }
-    });
+    Response response = await _reddit._client.get(uri);
+    Reddit.logger.finer("Response code ${response.statusCode}");
+    try {
+      return new JsonObject.fromJsonString(response.body);
+    } on FormatException catch (e) {
+      var exc = new RedditApiException("Exception in parsing JSON from $uri", e);
+      Reddit.logger.warning(exc);
+      throw exc;
+    }
   }
 
   Uri _redditUri(String resourse, Map params) {

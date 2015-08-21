@@ -115,7 +115,7 @@ class Reddit {
    *     // or
    *     await reddit.authFinish(response: authServerResponse);
    */
-  Future<Reddit> authFinish({Map response, String code, String username, String password}) {
+  Future<Reddit> authFinish({Map response, String code, String username, String password}) async {
     if (_grant == null) throw new StateError("Should first call setupOAuth2");
     if (_oauthEnabled) throw new StateError("OAuth2 is already enabled");
 
@@ -132,24 +132,23 @@ class Reddit {
       // APP-ONLY AUTH
       logger.info("Requesting a userless OAuth2 token at $_TOKEN_ENDPOINT");
       DateTime startTime = new DateTime.now();
-      return _client.post(_TOKEN_ENDPOINT.replace(userInfo: "${_grant.identifier}:${_grant.secret}"), body: {
+      Response response = await _client.post(_TOKEN_ENDPOINT.replace(userInfo: "${_grant.identifier}:${_grant.secret}"), body: {
         "grant_type": "client_credentials",
         "username": username == null ? "" : username,
         "password": password == null ? "" : password
-      }).then((Response response) {
-        logger.fine("Access token response: [${response.statusCode}] ${response.body}");
-        oauth2.Credentials credentials = handleAccessTokenResponse(response, _TOKEN_ENDPOINT, startTime, ["*"]);
-        oauth2.Client oauthClient = new oauth2.Client(_grant.identifier, _grant.secret, credentials, httpClient: _client);
-        return withAuthClient(oauthClient);
       });
+      logger.fine("Access token response: [${response.statusCode}] ${response.body}");
+      oauth2.Credentials credentials = handleAccessTokenResponse(response, _TOKEN_ENDPOINT, startTime, ["*"]);
+      oauth2.Client oauthClient = new oauth2.Client(_grant.identifier, _grant.secret, credentials, httpClient: _client);
+      return withAuthClient(oauthClient);
     } else {
       // USER-ENABLED AUTH
       //  (flow using AuthorizationCodeGrant from oauth2 package)
       logger.info("Enabling user authentication.");
       if (response != null && code == null) {
-        return _grant.handleAuthorizationResponse(response).then(withAuthClient);
+        return withAuthClient(await _grant.handleAuthorizationResponse(response));
       } else if (code != null && response == null) {
-        return _grant.handleAuthorizationCode(code).then(withAuthClient);
+        return withAuthClient(await _grant.handleAuthorizationCode(code));
       } else {
         throw new ArgumentError("Only either of response and code should be provided.");
       }
