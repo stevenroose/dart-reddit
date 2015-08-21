@@ -135,7 +135,8 @@ class Reddit {
       Response response = await _client.post(_TOKEN_ENDPOINT.replace(userInfo: "${_grant.identifier}:${_grant.secret}"), body: {
         "grant_type": "client_credentials",
         "username": username == null ? "" : username,
-        "password": password == null ? "" : password
+        "password": password == null ? "" : password,
+        "duration": "permanent"
       });
       logger.fine("Access token response: [${response.statusCode}] ${response.body}");
       oauth2.Credentials credentials = handleAccessTokenResponse(response, _TOKEN_ENDPOINT, startTime, ["*"]);
