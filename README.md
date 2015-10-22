@@ -42,7 +42,7 @@ There are two options: App-only and User authorization.
 ```dart
 reddit.authSetup(identifier, secret);
 // with user info
-await reddit.authFinish(username: "sroose", password: "you wish");
+await reddit.authFinish(username: "sroose", password: "correct horse battery staple");
 // or without
 await reddit.authFinish();
 ```
@@ -56,7 +56,7 @@ reddit.authSetup(identifier, secret);
 Uri authUrl = reddit.authUrl("https://myapp.com/auth_redirect");
 // redirect user to authUrl and gather the response from the auth server
 await reddit.authFinish(response: authServerResponse);
-// or if you already extracted the auth code from the ersponse
+// or if you already extracted the auth code from the response
 await reddit.authFinish(code: authCode);
 ```
 
@@ -65,11 +65,11 @@ await reddit.authFinish(code: authCode);
 
 Most methods in the API construct a `Query`, which can be fetched to get a future with the results.
 
-Most queries allow filtering. For the supported filters, we refer to the [Reddit API docs](https://www.reddit.com/dev/api/oauth#scope_read) or the [API docs for this library](#documentation).
+Most queries allow filtering. For the supported filters, we refer to the [Reddit API docs](https://www.reddit.com/dev/api/oauth#scope_read) or the [documentation for this library](#documentation).
 
 ```dart
 // without filters
-reddit.frontPage.new().fetch().then(print);
+reddit.frontPage.newPosts().fetch().then(print);
 // filtered
 reddit.frontPage.hot().limit(10).fetch().then(print);
 ```
@@ -95,7 +95,7 @@ reddit.sub("dartlang").top("day").fetch().then((result) {
 reddit.sub("dartlang").top("month").listen((result) {
   print(result);
   if (notEnough) {
-    result.fetchmore();
+    result.fetchMore();
   }
 })
 ```
