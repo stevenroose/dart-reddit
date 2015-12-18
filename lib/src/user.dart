@@ -120,6 +120,11 @@ class RedditUser {
    */
   FilterableQuery multis() => new FilterableQuery._(_reddit, "api/multi/user/$name", {}, ["expand_srs"]);
 
+  /**
+   * A multi curated by this user.
+   */
+  Multireddit multi(String multiName) => new Multireddit._(_reddit, name, multiName);
+
 
   /* TROPHIES */
 

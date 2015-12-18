@@ -20,6 +20,8 @@ export "src/reddit_uri.dart";
 
 part "src/reddit.dart";
 part "src/subreddit.dart";
+part "src/multireddit.dart";
 part "src/listing.dart";
+part "src/listings.dart";
 part "src/query.dart";
 part "src/user.dart";

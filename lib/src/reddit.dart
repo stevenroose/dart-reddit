@@ -27,6 +27,9 @@ class Reddit {
 
   RedditUser user(String username) => new RedditUser._(this, username);
 
+//  FilterableQuery multi(String multiPath) => new FilterableQuery._(this, "api/multi/$multiPath", {}, ["expand_srs"]);
+  Multireddit multi(String user, String multiName) => new Multireddit._(this, user, multiName);
+
 
   /* BROWSE SUBREDDITS */
 
