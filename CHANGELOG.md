@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.3 (2015-12-18)
+
+- Upgraded dependencies to latest versions
+- Adapted to breaking changes in oauth2 v1.0.0
+- Added better support for multireddits
+
 ## 0.3.2 (2015-04-03)
 
 - Updated RedditUri with official regex and extra test
