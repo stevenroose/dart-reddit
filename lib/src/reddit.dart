@@ -82,7 +82,7 @@ class Reddit {
     if (_grant != null) throw new StateError("Should not call this method twice");
     if (_oauthEnabled) throw new StateError("OAuth2 is already enabled");
     _grant = new oauth2.AuthorizationCodeGrant(
-        identifier, secret, _AUTH_ENDPOINT, _TOKEN_ENDPOINT, httpClient: _client);
+        identifier, _AUTH_ENDPOINT, _TOKEN_ENDPOINT, secret: secret, httpClient: _client);
   }
 
   /**
@@ -117,6 +117,8 @@ class Reddit {
    *     await reddit.authFinish(code: "code_from_server");
    *     // or
    *     await reddit.authFinish(response: authServerResponse);
+   *
+   * The Reddit instance provided by the Future, is the same as the instance this method is invoked on.
    */
   Future<Reddit> authFinish({Map response, String code, String username, String password}) async {
     if (_grant == null) throw new StateError("Should first call setupOAuth2");
@@ -143,7 +145,7 @@ class Reddit {
       });
       logger.fine("Access token response: [${response.statusCode}] ${response.body}");
       oauth2.Credentials credentials = handleAccessTokenResponse(response, _TOKEN_ENDPOINT, startTime, ["*"]);
-      oauth2.Client oauthClient = new oauth2.Client(_grant.identifier, _grant.secret, credentials, httpClient: _client);
+      oauth2.Client oauthClient = new oauth2.Client(credentials, identifier: _grant.identifier, secret: _grant.secret, httpClient: _client);
       return withAuthClient(oauthClient);
     } else {
       // USER-ENABLED AUTH
