@@ -28,7 +28,7 @@ class Subreddit extends Object with Listings {
   /**
    * Allowed filters are "after", "before", "count", "limit", "restrict_sr", "show", "sort", "syntax", "t".
    */
-  FilterableQuery search(String query, {bool restrict_sr: true}) => new FilterableQuery._(_reddit, _res("search"), {"q": query, "restrict_sr": restrict_sr},
+  FilterableQuery search(String query) => new FilterableQuery._(_reddit, _res("search"), {"q": query, "restrict_sr": restrict_sr},
       ["after", "before", "count", "limit", "restrict_sr", "show", "sort", "syntax", "t"]);
 
   @override
