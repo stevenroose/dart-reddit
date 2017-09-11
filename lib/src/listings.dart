@@ -1,14 +1,11 @@
 part of reddit;
 
-
 abstract class Listings {
   Reddit _reddit;
 
   String get path;
 
   String _res(String res) => path == null ? res : "$path/$res";
-
-
 
   /**
    *

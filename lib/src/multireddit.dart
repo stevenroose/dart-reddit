@@ -1,6 +1,5 @@
 part of reddit;
 
-
 class Multireddit extends Object with Listings {
   Reddit _reddit;
 
@@ -11,11 +10,9 @@ class Multireddit extends Object with Listings {
 
   String get path => "user/$user/m/$name";
 
+  FilterableQuery info() =>
+      new FilterableQuery._(_reddit, "api/multi/$path", {}, ["expand_srs"]);
 
-  FilterableQuery info() => new FilterableQuery._(_reddit, "api/multi/$path", {}, ["expand_srs"]);
-
-  FilterableQuery description() => new FilterableQuery._(_reddit, "api/multi/$path/description", {});
-
-
-
+  FilterableQuery description() =>
+      new FilterableQuery._(_reddit, "api/multi/$path/description", {});
 }

@@ -1,13 +1,10 @@
 library reddit.test.uri;
 
-
 import "package:reddit/reddit.dart";
 import "package:unittest/unittest.dart";
 
-
 void main() {
   group("RedditUri", () {
-
     test("subreddit", () {
       Uri u = Uri.parse("http://www.reddit.com/r/Bitcoin");
       expect(RedditUri.matches(u), isTrue);
@@ -16,7 +13,8 @@ void main() {
     });
 
     test("post", () {
-      Uri u = Uri.parse("https://www.reddit.com/r/Bitcoin/comments/311gfc/in_a_plea_bargain_former_dea_agent_agrees_to/");
+      Uri u = Uri.parse(
+          "https://www.reddit.com/r/Bitcoin/comments/311gfc/in_a_plea_bargain_former_dea_agent_agrees_to/");
       expect(RedditUri.matches(u), isTrue);
       RedditUri uri = new RedditUri(u);
       expect(uri.subReddit, equals("Bitcoin"));
@@ -24,7 +22,8 @@ void main() {
     });
 
     test("comment", () {
-      Uri u = Uri.parse("https://www.reddit.com/r/Bitcoin/comments/311gfc/in_a_plea_bargain_former_dea_agent_agrees_to/cpxog28");
+      Uri u = Uri.parse(
+          "https://www.reddit.com/r/Bitcoin/comments/311gfc/in_a_plea_bargain_former_dea_agent_agrees_to/cpxog28");
       expect(RedditUri.matches(u), isTrue);
       RedditUri uri = new RedditUri(u);
       expect(uri.subReddit, equals("Bitcoin"));
@@ -33,7 +32,8 @@ void main() {
     });
 
     test("query bit", () {
-      Uri u = Uri.parse("https://www.reddit.com/r/Bitcoin/comments/311gfc/in_a_plea_bargain_former_dea_agent_agrees_to/cpxog28?context=1");
+      Uri u = Uri.parse(
+          "https://www.reddit.com/r/Bitcoin/comments/311gfc/in_a_plea_bargain_former_dea_agent_agrees_to/cpxog28?context=1");
       expect(RedditUri.matches(u), isTrue);
       RedditUri uri = new RedditUri(u);
       expect(uri.subReddit, equals("Bitcoin"));

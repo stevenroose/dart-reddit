@@ -1,23 +1,31 @@
 part of reddit;
 
-
 /**
  *
  * The filters included in a Listing are "after", "before", "count", "limit", "show".
  */
 class Listing extends FilterableQuery implements Stream<ListingResult> {
-  static const List<String> _LISTING_FILTERS = const ["after", "before", "count", "limit", "show"];
+  static const List<String> _LISTING_FILTERS = const [
+    "after",
+    "before",
+    "count",
+    "limit",
+    "show"
+  ];
 
   StreamController _controller;
 
-  Listing._(Reddit reddit, String resource, Map params, [Iterable<String> extraFilters = const []])
-      : super._(reddit, resource, params, []..addAll(_LISTING_FILTERS)..addAll(extraFilters)) {
+  Listing._(Reddit reddit, String resource, Map params,
+      [Iterable<String> extraFilters = const []])
+      : super._(reddit, resource, params,
+            []..addAll(_LISTING_FILTERS)..addAll(extraFilters)) {
     _controller = new StreamController(onListen: fetch);
   }
 
   Listing after(fullname) {
     if (params.containsKey("before")) {
-      throw new StateError("It is not possible to specify both the after and before filter.");
+      throw new StateError(
+          "It is not possible to specify both the after and before filter.");
     }
     fullname = new Fullname.cast(fullname);
     params["after"] = fullname;
@@ -26,7 +34,8 @@ class Listing extends FilterableQuery implements Stream<ListingResult> {
 
   Listing before(fullname) {
     if (params.containsKey("after")) {
-      throw new StateError("It is not possible to specify both the after and before filter.");
+      throw new StateError(
+          "It is not possible to specify both the after and before filter.");
     }
     fullname = new Fullname.cast(fullname);
     params["before"] = fullname;
@@ -51,7 +60,7 @@ class Listing extends FilterableQuery implements Stream<ListingResult> {
   @override
   Future<ListingResult> fetch() {
     return super.fetch().then((JsonObject result) {
-      if(result.containsKey("data")) {
+      if (result.containsKey("data")) {
         params["after"] = result["data"]["after"];
         params["before"] = result["data"]["before"];
       }
@@ -63,14 +72,14 @@ class Listing extends FilterableQuery implements Stream<ListingResult> {
 
   @override
   noSuchMethod(Invocation inv) {
-    if (reflectClass(Stream).instanceMembers.containsKey(inv.memberName) || inv.memberName == const Symbol("listen")) {
+    if (reflectClass(Stream).instanceMembers.containsKey(inv.memberName) ||
+        inv.memberName == const Symbol("listen")) {
       return reflect(_controller.stream).delegate(inv);
     } else {
       return super.noSuchMethod(inv);
     }
   }
 }
-
 
 /**
  * This class is a JsonObject containing data on a Listing stream.
@@ -80,7 +89,6 @@ class Listing extends FilterableQuery implements Stream<ListingResult> {
  * The method [fetchMore] allows to request the next batch of data.
  */
 class ListingResult implements JsonObject {
-
   JsonObject _result;
   Listing _listing;
 
@@ -93,5 +101,4 @@ class ListingResult implements JsonObject {
 
   @override
   String toString() => _result.toString();
-
 }

@@ -1,6 +1,5 @@
 library reddit;
 
-
 import "dart:async";
 @MirrorsUsed(symbols: "", override: "*", targets: "Client")
 import "dart:mirrors";
@@ -13,10 +12,8 @@ import "package:oauth2/src/handle_access_token_response.dart";
 
 import "src/fullname.dart";
 
-
 export "src/fullname.dart";
 export "src/reddit_uri.dart";
-
 
 part "src/reddit.dart";
 part "src/subreddit.dart";

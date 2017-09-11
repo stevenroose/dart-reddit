@@ -1,14 +1,10 @@
 library reddit.test.fullname;
 
-
 import "package:reddit/reddit.dart";
 import "package:unittest/unittest.dart";
 
-
-
 void main() {
   group("fullname", () {
-
     test("equals", () {
       Fullname fn1 = new Fullname("t5_2sut9");
       Fullname fn2 = new Fullname("t5_2sut9");
