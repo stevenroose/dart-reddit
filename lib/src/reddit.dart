@@ -144,7 +144,7 @@ class Reddit {
         "duration": "permanent"
       });
       logger.fine("Access token response: [${response.statusCode}] ${response.body}");
-      oauth2.Credentials credentials = handleAccessTokenResponse(response, _TOKEN_ENDPOINT, startTime, ["*"]);
+      oauth2.Credentials credentials = handleAccessTokenResponse(response, _TOKEN_ENDPOINT, startTime, ["*"], "");
       oauth2.Client oauthClient = new oauth2.Client(credentials, identifier: _grant.identifier, secret: _grant.secret, httpClient: _client);
       return withAuthClient(oauthClient);
     } else {

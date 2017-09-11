@@ -6,7 +6,7 @@ abstract class Listings {
 
   String get path;
 
-  String _res(String res) => name == null ? res : "$path/$res";
+  String _res(String res) => path == null ? res : "$path/$res";
 
 
 
