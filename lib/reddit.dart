@@ -1,11 +1,12 @@
 library reddit;
 
 import "dart:async";
+import "dart:collection";
+import "dart:convert" show JSON;
 @MirrorsUsed(symbols: "", override: "*", targets: "Client")
 import "dart:mirrors";
 
 import "package:http/http.dart";
-import "package:json_object/json_object.dart";
 import "package:logging/logging.dart";
 import "package:oauth2/oauth2.dart" as oauth2;
 import "package:oauth2/src/handle_access_token_response.dart";
