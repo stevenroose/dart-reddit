@@ -1,6 +1,6 @@
 name: reddit
 description: A Reddit library for Dart.
-version: 0.4.0
+version: 0.4.0+1
 author: Steven Roose <stevenroose@gmail.com>
 homepage: https://github.com/stevenroose/dart-reddit
 dependencies:
