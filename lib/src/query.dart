@@ -81,7 +81,9 @@ class FilterableQuery extends Query {
 class RedditApiException implements Exception {
   String message;
   var reason;
+
   RedditApiException([this.message, this.reason]);
+
   @override
   String toString() => "RedditApiException: $message\nReason: $reason";
 }

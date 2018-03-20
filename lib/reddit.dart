@@ -3,8 +3,6 @@ library reddit;
 import "dart:async";
 import "dart:collection";
 import "dart:convert" show JSON;
-@MirrorsUsed(symbols: "", override: "*", targets: "Client")
-import "dart:mirrors";
 
 import "package:http/http.dart";
 import "package:logging/logging.dart";

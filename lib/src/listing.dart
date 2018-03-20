@@ -57,6 +57,9 @@ class Listing extends FilterableQuery implements Stream<ListingResult> {
     return this;
   }
 
+  /// The stream to which results are added when calling [fetch].
+  Stream<ListingResult> get results => _controller.stream;
+
   @override
   Future<ListingResult> fetch() {
     return super.fetch().then((Map result) {
@@ -68,16 +71,6 @@ class Listing extends FilterableQuery implements Stream<ListingResult> {
       _controller.add(res);
       return res;
     });
-  }
-
-  @override
-  noSuchMethod(Invocation inv) {
-    if (reflectClass(Stream).instanceMembers.containsKey(inv.memberName) ||
-        inv.memberName == const Symbol("listen")) {
-      return reflect(_controller.stream).delegate(inv);
-    } else {
-      return super.noSuchMethod(inv);
-    }
   }
 }
 
@@ -97,16 +90,16 @@ class ListingResult extends MapMixin implements Map<String,dynamic> {
   Future<ListingResult> fetchMore() => _listing.fetch();
 
   @override
-  operator [](String key) => _result[key];
+  operator [](Object key) => _result[key];
 
   @override
-  operator []=(String key, dynamic value) => _result[key] = value;
+  operator []=(Object key, dynamic value) => _result[key] = value;
 
   @override
   Iterable<String> get keys => _result.keys;
 
   @override
-  dynamic remove(String key) => _result.remove(key);
+  dynamic remove(Object key) => _result.remove(key);
 
   @override
   void clear() => _result.clear();
