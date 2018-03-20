@@ -59,7 +59,7 @@ class Listing extends FilterableQuery implements Stream<ListingResult> {
 
   @override
   Future<ListingResult> fetch() {
-    return super.fetch().then((JsonObject result) {
+    return super.fetch().then((Map<String, dynamic> result) {
       if (result.containsKey("data")) {
         params["after"] = result["data"]["after"];
         params["before"] = result["data"]["before"];
@@ -88,16 +88,16 @@ class Listing extends FilterableQuery implements Stream<ListingResult> {
  *
  * The method [fetchMore] allows to request the next batch of data.
  */
-class ListingResult implements JsonObject {
-  JsonObject _result;
+class ListingResult implements Map<String, dynamic> {
+  Map<String, dynamic> _result;
   Listing _listing;
 
-  ListingResult(JsonObject this._result, Listing this._listing);
+  ListingResult(Map<String, dynamic> this._result, Listing this._listing);
 
   Future<ListingResult> fetchMore() => _listing.fetch();
 
   @override
-  noSuchMethod(Invocation inv) => reflect(_result).delegate(inv);
+  noSuchMethod(Invocation inv) => _result[inv.memberName];
 
   @override
   String toString() => _result.toString();
