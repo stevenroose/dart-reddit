@@ -82,13 +82,13 @@ class Listing extends FilterableQuery implements Stream<ListingResult> {
 }
 
 /**
- * This class is a JsonObject containing data on a Listing stream.
+ * This class is a Map containing data on a Listing stream.
  *
  * You can use it just like the result of [Query.fetch].
  *
  * The method [fetchMore] allows to request the next batch of data.
  */
-class ListingResult implements Map<String, dynamic> {
+class ListingResult extends MapMixin implements Map<String, dynamic> {
   Map<String, dynamic> _result;
   Listing _listing;
 
@@ -97,8 +97,21 @@ class ListingResult implements Map<String, dynamic> {
   Future<ListingResult> fetchMore() => _listing.fetch();
 
   @override
-  noSuchMethod(Invocation inv) => _result[inv.memberName];
+  operator [](String key) => _result[key];
 
+  @override
+  operator []=(String key, dynamic value) => _result[key] = value;
+
+  @override
+  Iterable<String> get keys => _result.keys;
+
+  @override
+  dynamic remove(String key) => _result.remove(key);
+
+  @override
+  void clear() => _result.clear();
+
+  @override
   @override
   String toString() => _result.toString();
 }
