@@ -57,9 +57,12 @@ class Listing extends FilterableQuery implements Stream<ListingResult> {
     return this;
   }
 
+  /// The stream to which results are added when calling [fetch].
+  Stream<ListingResult> get results => _controller.stream;
+
   @override
   Future<ListingResult> fetch() {
-    return super.fetch().then((JsonObject result) {
+    return super.fetch().then((Map result) {
       if (result.containsKey("data")) {
         params["after"] = result["data"]["after"];
         params["before"] = result["data"]["before"];
@@ -69,35 +72,37 @@ class Listing extends FilterableQuery implements Stream<ListingResult> {
       return res;
     });
   }
-
-  @override
-  noSuchMethod(Invocation inv) {
-    if (reflectClass(Stream).instanceMembers.containsKey(inv.memberName) ||
-        inv.memberName == const Symbol("listen")) {
-      return reflect(_controller.stream).delegate(inv);
-    } else {
-      return super.noSuchMethod(inv);
-    }
-  }
 }
 
 /**
- * This class is a JsonObject containing data on a Listing stream.
+ * This class is a Map containing data on a Listing stream.
  *
  * You can use it just like the result of [Query.fetch].
  *
  * The method [fetchMore] allows to request the next batch of data.
  */
-class ListingResult implements JsonObject {
-  JsonObject _result;
+class ListingResult extends MapMixin implements Map<String,dynamic> {
+  Map<String,dynamic> _result;
   Listing _listing;
 
-  ListingResult(JsonObject this._result, Listing this._listing);
+  ListingResult(Map<String,dynamic> this._result, Listing this._listing);
 
   Future<ListingResult> fetchMore() => _listing.fetch();
 
   @override
-  noSuchMethod(Invocation inv) => reflect(_result).delegate(inv);
+  operator [](Object key) => _result[key];
+
+  @override
+  operator []=(Object key, dynamic value) => _result[key] = value;
+
+  @override
+  Iterable<String> get keys => _result.keys;
+
+  @override
+  dynamic remove(Object key) => _result.remove(key);
+
+  @override
+  void clear() => _result.clear();
 
   @override
   String toString() => _result.toString();

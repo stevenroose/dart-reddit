@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0
+
+- Remove json_object dependency and use Map instead.
+- Remove mirrors dependency
+- Add ResultListing.results getter for the underlying stream.
+
 ## 0.4.0 (2017-01-22)
 
 - Fix `subreddit.search()` to restrict results to the subreddit
