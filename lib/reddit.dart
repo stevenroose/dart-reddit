@@ -2,7 +2,8 @@ library reddit;
 
 import "dart:async";
 import "dart:collection";
-import "dart:convert" show JSON;
+import "dart:convert" show json;
+import 'dart:core';
 
 import "package:http/http.dart";
 import "package:logging/logging.dart";
