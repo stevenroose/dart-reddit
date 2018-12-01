@@ -8,4 +8,4 @@ dependencies:
   logging: ">=0.11.0 <0.12.0"
   oauth2: ">=1.0.1 <2.0.0"
 dev_dependencies:
-  unittest: any
+  test: ^1.5.1+1
