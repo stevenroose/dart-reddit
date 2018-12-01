@@ -1,7 +1,7 @@
 library reddit.test.fullname;
 
 import "package:reddit/reddit.dart";
-import "package:unittest/unittest.dart";
+import "package:test/test.dart";
 
 void main() {
   group("fullname", () {
