@@ -3,7 +3,7 @@ environment:
   sdk: ">=2.0.0 <3.0.0"
 
 description: A Reddit library for Dart.
-version: 0.5.0
+version: 0.6.0
 author: Steven Roose <stevenroose@gmail.com>
 homepage: https://github.com/stevenroose/dart-reddit
 dependencies:

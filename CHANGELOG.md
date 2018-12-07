@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.0
+
+- Support Dart v2
+
 ## 0.5.0
 
 - Remove json_object dependency and use Map instead.
