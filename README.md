@@ -29,11 +29,7 @@ Reddit reddit = new Reddit(new BrowserClient());
 
 ### OAuth
 
-To enable OAuth, you will need an app identifier and a secret. Get them [here](https://www.reddit.com/prefs/apps).
-
-OAuth is required for some of the public endpoints (those marked OAuth-only) and will be required for all endpoints
-starting August 3, 2015
-(see [this announcement](https://www.reddit.com/r/redditdev/comments/2ujhkr/important_api_licensing_terms_clarified/)).
+OAuth is required for all endpoints. To enable OAuth, you will need an app identifier and a secret. Get them [here](https://www.reddit.com/prefs/apps).
 
 There are two options: App-only and User authorization.
 
